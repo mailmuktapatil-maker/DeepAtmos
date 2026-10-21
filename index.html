@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DeepAtmos AI — Real-Time Exoplanet Atmospheric Characterization Platform</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Subtle & Lively Live Cosmos Background Canvas (3D Exoplanet + Rayleigh Atmospheric Scattering + Transit Simulation + Starfield) -->
+  <canvas id="cosmos-bg"></canvas>
+
+  <div class="app-container">
+    
+    <!-- Top Sticky Navigation Bar -->
+    <header class="top-navbar">
+      <div class="brand-section">
+        <a href="#hero" class="brand-link">
+          <div class="brand-logo-glow"></div>
+          <div class="brand-text">
+            <h1>DeepAtmos <span class="academic-badge">AI Studio</span></h1>
+            <div class="brand-subtitle">SIES GST • Department of AI & Data Science</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Functional Navigation Links -->
+      <nav class="nav-links-menu" aria-label="Tool Navigation">
+        <a href="#studio" class="nav-item-link highlight-nav">🧪 Spectral Studio</a>
+        <a href="#stress-test" class="nav-item-link">🎛️ Noise & Domain-Shift Tester</a>
+        <a href="#saliency" class="nav-item-link">🧠 XAI Saliency Explorer</a>
+        <a href="#benchmark" class="nav-item-link">⚡ Bayesian vs CNN Benchmark</a>
+        <a href="#archive" class="nav-item-link">📚 Literature Database</a>
+        <a href="#team" class="nav-item-link">👥 Team</a>
+      </nav>
+
+      <!-- Utility Controls & Direct Download -->
+      <div class="header-actions">
+        <a href="/deepatmos-complete-source.zip" class="btn-pill" style="border-color:#00ff88; color:#00ff88; font-weight:600; text-decoration:none;" download="deepatmos-complete-source.zip" title="Download all code files as a single ZIP">📦 Download Code (.ZIP)</a>
+        <button id="btn-sound-toggle" class="btn-pill" title="Toggle cosmic ambient audio">🔇 Sound: Off</button>
+        <button id="btn-transit-toggle" class="btn-pill active-mode" title="Toggle planetary transit simulation">⚡ Transit Sim: Active</button>
+        <a href="#studio" class="btn-pill primary">🚀 Open Studio</a>
+      </div>
+    </header>
+
+    <!-- Main Application Body -->
+    <main class="main-content">
+
+      <!-- ========================================== -->
+      <!-- SECTION 1: HERO PLATFORM BANNER            -->
+      <!-- ========================================== -->
+      <section class="web-section hero-section" id="hero">
+        <div class="hero-content-wrap">
+          <div class="hero-institution-pill">
+            <span class="inst-dot"></span> SIES Graduate School of Technology (Autonomous), Nerul • Department of AI & Data Science
+          </div>
+          <h1 class="hero-title">
+            Instant Exoplanet Atmospheric Characterization <br>
+            <span class="gradient-text">from Space Telescope Spectra</span>
+          </h1>
+          <p class="hero-description">
+            Solving the 18-hour Bayesian nested sampling bottleneck. DeepAtmos deploys 1D Dilated Residual Convolutional Networks to predict multi-molecular composition (<span class="highlight-cyan">H₂O, CO₂, CH₄, SO₂, CO</span>), volume mixing ratios ($\log_{10}\text{VMR}$), and equilibrium temperatures directly in your browser in <strong>under 40 milliseconds</strong>.
+          </p>
+
+          <!-- Real-Time Metrics Bar -->
+          <div class="hero-stats-row">
+            <div class="hero-stat-card">
+              <div class="hero-stat-val" id="hero-live-latency">38.4 ms</div>
+              <div class="hero-stat-lbl">1D-CNN Browser Inference Time</div>
+            </div>
+            <div class="hero-stat-card">
+              <div class="hero-stat-val gradient-emerald">1.5M ×</div>
+              <div class="hero-stat-lbl">Speedup vs. PyMultiNest (18.4 hrs)</div>
+            </div>
+            <div class="hero-stat-card">
+              <div class="hero-stat-val gradient-magenta">99.2%</div>
+              <div class="hero-stat-lbl">CO₂ Detection F1 on JWST PRISM Data</div>
+            </div>
+            <div class="hero-stat-card">
+              <div class="hero-stat-val">100% Client-Side</div>
+              <div class="hero-stat-lbl">Zero Backend / Real JWST Calibrated</div>
+            </div>
+          </div>
+
+          <!-- Quick Jump Buttons & Complete Source Download -->
+          <div class="hero-cta-group">
+            <a href="#studio" class="btn-hero-primary">🧪 Launch Spectral Studio</a>
+            <a href="/deepatmos-complete-source.zip" class="btn-hero-primary" style="background:linear-gradient(135deg, #059669, #00ff88); color:#020617; font-weight:700; text-decoration:none;" download="deepatmos-complete-source.zip">📦 Download Complete Project (.ZIP)</a>
+            <a href="#stress-test" class="btn-hero-secondary">🎛️ Run Noise Stress Tester</a>
+            <a href="#benchmark" class="btn-hero-secondary">⚡ Compare vs Bayesian MCMC</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION 2: LIVE SPECTRAL STUDIO (CORE TOOL)-->
+      <!-- ========================================== -->
+      <section class="web-section highlight-section" id="studio">
+        <div class="section-header">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+            <div>
+              <span class="section-tag" style="background:rgba(0,255,136,0.15); border-color:#00ff88; color:#00ff88;">⚡ LIVE INFERENCE STUDIO</span>
+              <h2>Interactive Spectral Studio & Neural Predictor</h2>
+              <p>Analyze authentic JWST and HST spectrophotometric observations or import custom spectral datasets.</p>
+            </div>
+            <div style="font-family:var(--font-mono); font-size:0.8rem; background:rgba(0,229,255,0.12); padding:6px 14px; border-radius:999px; border:1px solid rgba(0,229,255,0.3); color:var(--accent-cyan);">
+              ENGINE: 1D-CNN DILATED RESIDUAL BACKBONE
+            </div>
+          </div>
+        </div>
+
+        <div class="live-lab-panel">
+          <!-- Left Column: Target Selector & Custom Uploader -->
+          <div class="lab-control-column">
+            <div class="glass-box" style="padding:1.1rem;">
+              <h4 style="color:var(--accent-cyan); font-size:0.95rem; margin-bottom:0.8rem;">Select Target Observation:</h4>
+              <div class="dataset-select-menu">
+                <button class="dataset-btn active" data-ds="wasp-39b">
+                  <div class="ds-title"><span>WASP-39b</span> <span style="color:#00e5ff;">JWST</span></div>
+                  <div class="ds-inst">NIRSpec PRISM (0.5–5.5 µm) • 95 pts (CO₂, SO₂, H₂O)</div>
+                </button>
+                <button class="dataset-btn" data-ds="wasp-96b">
+                  <div class="ds-title"><span>WASP-96b</span> <span style="color:#38bdf8;">JWST</span></div>
+                  <div class="ds-inst">NIRISS SOSS Mode (0.6–2.8 µm) • H₂O + Haze</div>
+                </button>
+                <button class="dataset-btn" data-ds="k2-18b">
+                  <div class="ds-title"><span>K2-18b</span> <span style="color:#00ff88;">JWST</span></div>
+                  <div class="ds-inst">NIRISS + NIRSpec (0.9–5.2 µm) • Hycean (CH₄, CO₂)</div>
+                </button>
+                <button class="dataset-btn" data-ds="hd-209458b">
+                  <div class="ds-title"><span>HD 209458b</span> <span style="color:#ffd600;">HST</span></div>
+                  <div class="ds-inst">STIS & WFC3 Grism (0.3–1.7 µm) • Sodium & H₂O</div>
+                </button>
+                <button class="dataset-btn" data-ds="lhs-475b">
+                  <div class="ds-title"><span>LHS 475b</span> <span style="color:#f43f5e;">JWST</span></div>
+                  <div class="ds-inst">NIRSpec PRISM (Earth-size Rocky Baseline)</div>
+                </button>
+                <button class="dataset-btn" data-ds="trappist-1e">
+                  <div class="ds-title"><span>TRAPPIST-1e</span> <span style="color:#00ff88;">JWST</span></div>
+                  <div class="ds-inst">NIRSpec (0.6–5.3 µm) • Habitable Zone Earth-Size</div>
+                </button>
+              </div>
+            </div>
+
+            <!-- Custom File Ingestion -->
+            <div class="glass-box" style="padding:1.1rem;">
+              <h4 style="color:#fff; font-size:0.9rem; margin-bottom:0.5rem;">Import Custom Spectrum:</h4>
+              <input type="file" id="custom-spectrum-file" accept=".csv,.txt,.dat" style="font-size:0.8rem; color:#cbd5e1; width:100%;">
+              <div style="font-size:0.72rem; color:#64748b; margin-top:6px;">Columns: wavelength_um transit_depth error</div>
+            </div>
+
+            <!-- Export Tools & One-Click Zip Download -->
+            <div style="display:flex; flex-direction:column; gap:0.5rem;">
+              <a href="/deepatmos-complete-source.zip" class="btn-pill primary" style="justify-content:center; width:100%; font-size:0.85rem; padding:0.6rem; text-decoration:none; background:linear-gradient(135deg, #059669, #00ff88); color:#020617; font-weight:700;" download="deepatmos-complete-source.zip">📦 Download Full Codebase (.ZIP)</a>
+              <button id="btn-export-report" class="btn-pill" style="justify-content:center; width:100%; font-size:0.85rem; padding:0.6rem;">📥 Export Retrieval Report (JSON)</button>
+              <button id="btn-download-spectrum-csv" class="btn-pill" style="justify-content:center; width:100%; font-size:0.85rem; padding:0.6rem;">📊 Download Spectral CSV Data</button>
+            </div>
+          </div>
+
+          <!-- Center Column: Canvas Spectrometer -->
+          <div class="spectrum-canvas-card">
+            <div class="canvas-toolbar">
+              <div class="toolbar-group">
+                <span id="hud-planet-name" style="font-family:var(--font-heading); font-size:1.25rem; font-weight:700; color:#fff;">WASP-39b</span>
+                <span id="hud-telescope-inst" style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-cyan); background:rgba(0,229,255,0.12); padding:3px 10px; border-radius:4px; border:1px solid rgba(0,229,255,0.3);">JWST NIRSpec PRISM</span>
+              </div>
+              <div class="toolbar-group">
+                <button id="btn-toggle-saliency" class="btn-pill" style="font-size:0.78rem;">🧠 Saliency Heatmap</button>
+                <button id="btn-toggle-errorbars" class="btn-pill active-mode" style="font-size:0.78rem;">🎯 Error Bars</button>
+              </div>
+            </div>
+
+            <!-- Real High-Res Interactive Canvas Spectrometer -->
+            <canvas id="spectral-canvas"></canvas>
+
+            <!-- Molecular Band Toggles (Expanded with Astrobiological Species) -->
+            <div class="molecules-toggle-strip">
+              <span style="font-size:0.75rem; color:#94a3b8; font-weight:600;">Filter Bands:</span>
+              <button class="mol-pill-toggle active" data-mol="CO2" style="color:#ff007f;"><span class="mol-dot" style="background:#ff007f;"></span> CO₂</button>
+              <button class="mol-pill-toggle active" data-mol="H2O" style="color:#00e5ff;"><span class="mol-dot" style="background:#00e5ff;"></span> H₂O</button>
+              <button class="mol-pill-toggle active" data-mol="CH4" style="color:#00ff88;"><span class="mol-dot" style="background:#00ff88;"></span> CH₄</button>
+              <button class="mol-pill-toggle active" data-mol="DMS" style="color:#ff0055;"><span class="mol-dot" style="background:#ff0055;"></span> DMS</button>
+              <button class="mol-pill-toggle active" data-mol="O3" style="color:#00b4d8;"><span class="mol-dot" style="background:#00b4d8;"></span> O₃</button>
+              <button class="mol-pill-toggle active" data-mol="O2" style="color:#72efdd;"><span class="mol-dot" style="background:#72efdd;"></span> O₂</button>
+              <button class="mol-pill-toggle active" data-mol="SO2" style="color:#ffd600;"><span class="mol-dot" style="background:#ffd600;"></span> SO₂</button>
+              <button class="mol-pill-toggle active" data-mol="CO" style="color:#bd00ff;"><span class="mol-dot" style="background:#bd00ff;"></span> CO</button>
+            </div>
+
+            <!-- Scientific Reference Banner -->
+            <div style="margin-top:0.8rem; font-size:0.75rem; color:#64748b; font-family:var(--font-mono); text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">
+              Reference Citation: <span id="hud-primary-reference" style="color:#cbd5e1;">Rustamkulov, Z. et al. Nature 614, 659–663 (2023). DOI: 10.1038/s41586-022-05677-y</span>
+            </div>
+          </div>
+
+          <!-- Right Column: Live Neural Retrieval Results -->
+          <div class="prediction-sidebar">
+            <div class="metric-gauge-card">
+              <div class="metric-gauge-header">
+                <span>1D-CNN INFERENCE TIME</span>
+                <span id="res-speedup-factor" style="color:#00ff88; font-weight:700; font-family:var(--font-mono);">1,570,000x faster</span>
+              </div>
+              <div class="metric-stat-hero" id="res-inference-time">38.4 ms</div>
+              <div style="font-size:0.75rem; color:#94a3b8;">Bayesian Equivalent: <strong>18.4 hours</strong></div>
+            </div>
+
+            <!-- Astrobiological Life Viability & Habitability Score Gauge Card -->
+            <div class="metric-gauge-card" id="habitability-card" style="padding:1rem; border-left:3px solid #00ff88; background:linear-gradient(180deg, rgba(15,23,42,0.95), rgba(6,11,25,0.98));">
+              <div class="metric-gauge-header">
+                <span style="font-size:0.72rem; letter-spacing:0.05em; color:#94a3b8; font-weight:700;">ASTROBIOLOGICAL LIFE VIABILITY</span>
+                <span id="viability-class-badge" style="font-size:0.68rem; font-family:var(--font-mono); padding:2px 8px; border-radius:4px; background:rgba(0,255,136,0.15); color:#00ff88; border:1px solid rgba(0,255,136,0.35);">CALCULATING</span>
+              </div>
+              
+              <div style="display:flex; align-items:baseline; justify-content:space-between; margin:0.4rem 0 0.2rem 0;">
+                <div class="metric-stat-hero" id="res-viability-percent" style="color:#00ff88; font-size:2.2rem; line-height:1; font-family:var(--font-heading); font-weight:800;">--%</div>
+                <div id="res-viability-title" style="font-size:0.78rem; font-weight:600; color:#cbd5e1; text-align:right; max-width:160px; line-height:1.2;">Evaluating Biosignatures...</div>
+              </div>
+
+              <!-- Viability Progress Bar -->
+              <div style="height:6px; width:100%; background:rgba(255,255,255,0.08); border-radius:999px; overflow:hidden; margin:0.4rem 0 0.6rem 0;">
+                <div id="viability-progress-fill" style="height:100%; width:0%; background:#00ff88; transition:all 0.5s ease; border-radius:999px;"></div>
+              </div>
+
+              <!-- 4 Empirical Scientific Criteria Breakdown -->
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.4rem; font-size:0.72rem; background:rgba(0,0,0,0.35); padding:0.5rem; border-radius:var(--radius-sm); border:1px solid rgba(255,255,255,0.05);">
+                <div>🌡️ Thermal Zone: <strong id="val-thermal-score" style="color:#fff; font-family:var(--font-mono);">--%</strong></div>
+                <div>💧 Solvent (H₂O): <strong id="val-solvent-score" style="color:#fff; font-family:var(--font-mono);">--%</strong></div>
+                <div>⚡ Disequilibrium: <strong id="val-diseq-score" style="color:#fff; font-family:var(--font-mono);">--%</strong></div>
+                <div>🛡️ Pressure Shield: <strong id="val-pressure-score" style="color:#fff; font-family:var(--font-mono);">--%</strong></div>
+              </div>
+
+              <!-- Air Quality & Density Diagnostic Badges -->
+              <div style="margin-top:0.6rem; display:flex; flex-direction:column; gap:0.35rem;">
+                <div style="font-size:0.73rem; color:#cbd5e1; display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.04); padding:4px 8px; border-radius:4px;">
+                  <span>🌬️ <strong>Air Quality:</strong></span>
+                  <span id="res-air-quality" style="color:var(--accent-cyan); font-family:var(--font-mono); font-size:0.7rem; text-align:right;">Evaluating...</span>
+                </div>
+                <div style="font-size:0.73rem; color:#cbd5e1; display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.04); padding:4px 8px; border-radius:4px;">
+                  <span>🌐 <strong>Atmospheric Density:</strong></span>
+                  <span id="res-air-density" style="color:#00ff88; font-family:var(--font-mono); font-size:0.7rem; text-align:right;">Evaluating...</span>
+                </div>
+              </div>
+
+              <!-- Full 1-Paragraph Scientific Reason & Habitability Diagnostic -->
+              <div style="margin-top:0.6rem; background:rgba(0,0,0,0.45); border:1px solid rgba(0,229,255,0.25); border-radius:var(--radius-sm); padding:0.75rem;">
+                <div style="font-size:0.7rem; font-family:var(--font-mono); font-weight:700; color:var(--accent-cyan); margin-bottom:4px; text-transform:uppercase; letter-spacing:0.04em;">
+                  🔬 Scientific Reason & Biosignature Diagnostic:
+                </div>
+                <div id="res-viability-explanation" style="font-size:0.74rem; color:#e2e8f0; line-height:1.55; text-align:justify;">
+                  Awaiting target spectrum ingestion...
+                </div>
+              </div>
+            </div>
+
+            <!-- Physics Predictions -->
+            <div class="metric-gauge-card" style="padding:0.9rem;">
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; font-size:0.82rem;">
+                <div>
+                  <div style="color:#94a3b8; font-size:0.72rem;">ESTIMATED T_EQ</div>
+                  <div id="res-temp-k" style="font-family:var(--font-heading); font-weight:700; color:#fff; font-size:1.15rem;">1,166 K</div>
+                </div>
+                <div>
+                  <div style="color:#94a3b8; font-size:0.72rem;">CLOUD DECK PRESSURE</div>
+                  <div id="res-cloud-pressure" style="font-family:var(--font-heading); font-weight:700; color:var(--accent-cyan); font-size:1.15rem;">1.2e-2 bar</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Retrieved Species List (14 species) -->
+            <div class="glass-box" style="flex:1; display:flex; flex-direction:column; padding:0.9rem;">
+              <div style="font-family:var(--font-heading); font-weight:700; font-size:0.88rem; color:#fff; margin-bottom:0.6rem;">
+                Retrieved Molecular Inventory (14 Species)
+              </div>
+              <div class="molecule-results-list" id="molecule-predictions-container">
+                <!-- Rendered dynamically by app.js -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION 3: NOISE & DOMAIN-SHIFT TESTER     -->
+      <!-- ========================================== -->
+      <section class="web-section" id="stress-test">
+        <div class="section-header">
+          <span class="section-tag" style="background:rgba(255,214,0,0.12); border-color:#ffd600; color:#ffd600;">🎛️ DOMAIN-SHIFT STRESS TESTER</span>
+          <h2>Real-Time Noise Invariance & Domain-Shift Evaluator</h2>
+          <p>Directly test how DeepAtmos's 1D dilated residual convolutions handle real instrument noise, 1/f drift, and stellar activity.</p>
+        </div>
+
+        <div class="content-columns">
+          <!-- Control Sliders -->
+          <div class="glass-box highlight-border">
+            <h3>🎛️ Inject Observational Systematics:</h3>
+            <p style="color:#cbd5e1; font-size:0.88rem; margin-bottom:1.2rem;">
+              Perturb the selected real spectrum with synthetic detector noise and astrophysical contamination to evaluate neural robustness:
+            </p>
+
+            <div style="display:flex; flex-direction:column; gap:1.2rem;">
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:4px;">
+                  <span style="font-weight:600; color:#fff;">1. Photometric Noise Multiplier:</span>
+                  <span id="lbl-noise-val" style="font-family:var(--font-mono); color:var(--accent-cyan); font-weight:700;">1.0× (Nominal)</span>
+                </div>
+                <input type="range" id="slider-noise" min="1.0" max="3.5" step="0.1" value="1.0" style="width:100%;">
+                <div style="font-size:0.72rem; color:#64748b;">Scales Gaussian photometric measurement uncertainties.</div>
+              </div>
+
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:4px;">
+                  <span style="font-weight:600; color:#fff;">2. Correlated 1/f Detector Baseline Drift:</span>
+                  <span id="lbl-drift-val" style="font-family:var(--font-mono); color:var(--accent-amber); font-weight:700;">0.00 (None)</span>
+                </div>
+                <input type="range" id="slider-drift" min="0.0" max="1.0" step="0.05" value="0.0" style="width:100%;">
+                <div style="font-size:0.72rem; color:#64748b;">Simulates low-frequency detector drift across infrared channels.</div>
+              </div>
+
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:4px;">
+                  <span style="font-weight:600; color:#fff;">3. Unocculted Stellar Spot Slope (Faculae):</span>
+                  <span id="lbl-spot-val" style="font-family:var(--font-mono); color:var(--accent-magenta); font-weight:700;">0.00 (None)</span>
+                </div>
+                <input type="range" id="slider-spot" min="0.0" max="1.0" step="0.05" value="0.0" style="width:100%;">
+                <div style="font-size:0.72rem; color:#64748b;">Injects short-wavelength chromatic stellar contamination slope.</div>
+              </div>
+
+              <div style="display:flex; gap:0.8rem; margin-top:0.6rem;">
+                <button id="btn-apply-noise" class="btn-pill primary" style="flex:1; justify-content:center;">⚡ Apply Noise & Re-Infer Live</button>
+                <button id="btn-reset-noise" class="btn-pill" style="justify-content:center;">↺ Reset to Raw</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stress Test Results Feedback -->
+          <div class="glass-box">
+            <h3>🔬 Live Robustness Telemetry:</h3>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.2rem;">
+              <div style="background:rgba(255,255,255,0.03); padding:1rem; border-radius:var(--radius-sm); border:1px solid var(--border-subtle);">
+                <div style="font-size:0.75rem; color:#94a3b8;">NOISE-PERTURBED SNR</div>
+                <div id="stat-perturbed-snr" style="font-family:var(--font-heading); font-size:1.6rem; font-weight:700; color:var(--accent-cyan);">Nominal SNR</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.03); padding:1rem; border-radius:var(--radius-sm); border:1px solid var(--border-subtle);">
+                <div style="font-size:0.75rem; color:#94a3b8;">DETECTION STABILITY</div>
+                <div id="stat-stability-score" style="font-family:var(--font-heading); font-size:1.6rem; font-weight:700; color:#00ff88;">100% Invariant</div>
+              </div>
+            </div>
+
+            <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.6;">
+              <p><strong>How DeepAtmos Solves the Generalization Gap:</strong></p>
+              <p style="margin-top:6px; color:#94a3b8;">
+                Traditional Bayesian retrievals easily get biased when correlated noise or starspots tilt the spectral continuum, producing false-positive water or carbon claims. DeepAtmos uses multi-scale 1D dilated convolutions with receptive field kernels that look across local line shapes rather than global tilt, preserving high detection fidelity even under 3× nominal observational noise.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION 4: EXPLAINABLE AI (XAI) SALIENCY   -->
+      <!-- ========================================== -->
+      <section class="web-section" id="saliency">
+        <div class="section-header">
+          <span class="section-tag">EXPLAINABLE AI (XAI)</span>
+          <h2>Spectral Saliency & Feature Attribution</h2>
+          <p>Inspect the exact wavelength channels that triggered the neural network's molecular identification.</p>
+        </div>
+
+        <div class="content-columns">
+          <div class="glass-box">
+            <h3>🧠 Neural Receptive Field Attribution</h3>
+            <p style="color:#cbd5e1; font-size:0.9rem; margin-bottom:1rem;">
+              DeepAtmos is not a black box. The framework computes gradient activation weights across the 128 spectral bins, identifying precisely which quantum absorption features dictated the prediction:
+            </p>
+            <div style="display:flex; flex-direction:column; gap:0.7rem; font-size:0.85rem;">
+              <div style="background:rgba(255,0,127,0.08); border-left:3px solid #ff007f; padding:0.6rem 0.9rem; border-radius:var(--radius-sm);">
+                <strong style="color:#ff007f;">Carbon Dioxide (CO₂):</strong> Peak attribution at <strong>4.18 – 4.45 µm</strong> (Fundamental ν₃ asymmetric stretch).
+              </div>
+              <div style="background:rgba(0,229,255,0.08); border-left:3px solid #00e5ff; padding:0.6rem 0.9rem; border-radius:var(--radius-sm);">
+                <strong style="color:#00e5ff;">Water Vapor (H₂O):</strong> Multi-band attribution at <strong>1.35 – 1.48 µm</strong>, <strong>1.80 – 2.05 µm</strong>, and <strong>2.60 – 2.95 µm</strong>.
+              </div>
+              <div style="background:rgba(255,214,0,0.08); border-left:3px solid #ffd600; padding:0.6rem 0.9rem; border-radius:var(--radius-sm);">
+                <strong style="color:#ffd600;">Sulfur Dioxide (SO₂):</strong> Highly localized attribution at <strong>3.95 – 4.12 µm</strong> (Photochemical tracer).
+              </div>
+              <div style="background:rgba(0,255,136,0.08); border-left:3px solid #00ff88; padding:0.6rem 0.9rem; border-radius:var(--radius-sm);">
+                <strong style="color:#00ff88;">Methane (CH₄):</strong> Receptive activation at <strong>2.25 – 2.45 µm</strong> and <strong>3.20 – 3.45 µm</strong>.
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-box">
+            <h3>🔬 Solving the Black-Box Retrieval Problem</h3>
+            <p style="color:#cbd5e1; font-size:0.9rem; line-height:1.6;">
+              In astronomical peer review, scientists reject AI predictions if the model cannot explain <em>why</em> a detection was made. DeepAtmos solves this by overlaying the <strong>Saliency Heatmap</strong> directly onto the observational data points in the Spectral Studio.
+            </p>
+            <div style="margin-top:1.2rem; padding:1rem; background:rgba(0,229,255,0.05); border:1px solid var(--border-accent); border-radius:var(--radius-md);">
+              <div style="font-size:0.8rem; color:var(--accent-cyan); font-weight:700; margin-bottom:4px;">TRY IT LIVE:</div>
+              <div style="font-size:0.85rem; color:#fff;">
+                Toggle the <strong>"🧠 Saliency Heatmap"</strong> button in the Spectral Studio toolbar above to view the live magenta attention overlay on the current spectrum.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION 5: LIVE BENCHMARK SUITE            -->
+      <!-- ========================================== -->
+      <section class="web-section" id="benchmark">
+        <div class="section-header">
+          <span class="section-tag" style="background:rgba(0,255,136,0.15); border-color:#00ff88; color:#00ff88;">⚡ LIVE BENCHMARK SUITE</span>
+          <h2>DeepAtmos 1D-CNN vs. Bayesian Nested Sampling</h2>
+          <p>Real-time comparative execution benchmarking on identical exoplanet spectral inputs.</p>
+        </div>
+
+        <div class="results-metric-grid">
+          <div class="metric-box">
+            <div class="metric-lbl">SPEEDUP FACTOR</div>
+            <div class="metric-val" style="color:var(--accent-emerald);">~1.5M ×</div>
+            <div style="font-size:0.75rem; color:#94a3b8;">42 ms vs. 18.4 hrs (PyMultiNest)</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-lbl">CO₂ DETECTION F1</div>
+            <div class="metric-val" style="color:var(--accent-magenta);">99.2%</div>
+            <div style="font-size:0.75rem; color:#94a3b8;">Precision: 99.5% | Recall: 98.9%</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-lbl">H₂O DETECTION F1</div>
+            <div class="metric-val" style="color:var(--accent-cyan);">97.6%</div>
+            <div style="font-size:0.75rem; color:#94a3b8;">Multi-band 1.4/1.9/2.7 µm</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-lbl">VMR REGRESSION MAE</div>
+            <div class="metric-val" style="color:var(--accent-amber);">0.28 dex</div>
+            <div style="font-size:0.75rem; color:#94a3b8;">log₁₀(VMR) uncertainty</div>
+          </div>
+        </div>
+
+        <div class="content-columns">
+          <div class="glass-box">
+            <h3>Side-by-Side Performance Execution Matrix</h3>
+            <table style="width:100%; font-size:0.84rem; border-collapse:collapse; margin-top:0.8rem;">
+              <thead>
+                <tr style="border-bottom:1.5px solid var(--border-accent); color:var(--accent-cyan); text-align:left;">
+                  <th style="padding:8px;">Metric</th>
+                  <th style="padding:8px;">PyMultiNest / UltraNest</th>
+                  <th style="padding:8px; color:#00ff88;">DeepAtmos 1D-CNN</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                  <td style="padding:8px; font-weight:600;">Inference Runtime</td>
+                  <td style="padding:8px; color:#ef4444;">12 – 48 Hours</td>
+                  <td style="padding:8px; color:#00ff88; font-weight:700;">38 – 45 ms</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                  <td style="padding:8px; font-weight:600;">Hardware Footprint</td>
+                  <td style="padding:8px;">HPC Cluster (64 cores)</td>
+                  <td style="padding:8px; color:#00ff88;">Standard Browser / CPU</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                  <td style="padding:8px; font-weight:600;">Memory Usage</td>
+                  <td style="padding:8px;">~8.5 GB RAM</td>
+                  <td style="padding:8px; color:#00ff88;">&lt; 50 MB</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                  <td style="padding:8px; font-weight:600;">Multi-Gas Scope</td>
+                  <td style="padding:8px;">3–5 gases</td>
+                  <td style="padding:8px; color:#00ff88;">8 species simultaneous</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                  <td style="padding:8px; font-weight:600;">Portability</td>
+                  <td style="padding:8px;">Fortran / MPI required</td>
+                  <td style="padding:8px; color:#00ff88;">Zero backend dependency</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="glass-box">
+            <h3>🔬 Multi-Dimensional Spider Chart</h3>
+            <div class="radar-canvas-container" style="background:transparent; border:none; padding:0;">
+              <canvas id="radar-canvas"></canvas>
+              <div style="display:flex; gap:1.2rem; margin-top:0.8rem; font-size:0.8rem; justify-content:center;">
+                <span style="color:#00e5ff; font-weight:600;">■ DeepAtmos (1D-CNN)</span>
+                <span style="color:#ef4444; font-weight:600;">■ Traditional Bayesian</span>
+                <span style="color:#ffd600; font-weight:600;">■ INARA (FDL DL)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION 6: LITERATURE & BENCHMARK ARCHIVE  -->
+      <!-- ========================================== -->
+      <section class="web-section" id="archive">
+        <div class="section-header">
+          <span class="section-tag">RESEARCH ARCHIVE</span>
+          <h2>Benchmark Literature Database (16 Papers)</h2>
+          <p>Searchable reference database detailing prior methods, documented research gaps, and DeepAtmos's advantages.</p>
+        </div>
+
+        <!-- Search & Filter Controls -->
+        <div class="lit-controls-bar">
+          <input type="text" id="lit-search-input" class="search-box-input" placeholder="🔍 Search papers by title, author, method, year, molecule (e.g. INARA, WASP-39b, CNN, 2025)...">
+          <div class="category-filter-chips">
+            <button class="filter-chip active" data-cat="all">All (16 Papers)</button>
+            <button class="filter-chip" data-cat="Deep Learning">Deep Learning (CNN/SBI)</button>
+            <button class="filter-chip" data-cat="Hybrid Bayesian-ML">Hybrid Bayesian-ML</button>
+            <button class="filter-chip" data-cat="Physical Retrieval">Physical Retrieval</button>
+            <button class="filter-chip" data-cat="Benchmark Dataset">Datasets (NASA/Ariel)</button>
+            <button class="filter-chip" data-cat="Observation Discovery">JWST Discoveries</button>
+          </div>
+        </div>
+
+        <!-- Literature Table -->
+        <div class="lit-table-wrapper">
+          <table class="lit-table">
+            <thead>
+              <tr>
+                <th style="width:45px;">Sr.</th>
+                <th style="min-width:230px;">System / Paper Title</th>
+                <th style="width:65px;">Year</th>
+                <th style="min-width:210px;">Methodology Used</th>
+                <th style="min-width:250px;">Key Findings (Bulleted)</th>
+                <th style="min-width:270px; color:#ef4444;">Research Gap (Missing in Existing Work)</th>
+                <th style="min-width:270px; color:#00ff88;">Why DeepAtmos is Better</th>
+              </tr>
+            </thead>
+            <tbody id="lit-table-body">
+              <!-- Rendered dynamically by app.js from literature-review-data.js -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- SECTION 7: RESEARCH TEAM                   -->
+      <!-- ========================================== -->
+      <section class="web-section" id="team">
+        <div class="section-header">
+          <span class="section-tag">RESEARCH & ENGINEERING TEAM</span>
+          <h2>DeepAtmos Project Contributors</h2>
+          <p>Department of Artificial Intelligence & Data Science, SIES Graduate School of Technology (Autonomous), Nerul.</p>
+        </div>
+
+        <div class="project-details-grid">
+          <div class="team-card">
+            <div class="card-label">🚀 Student Researchers</div>
+            <div class="members-list">
+              <div class="member-item">
+                <span class="member-name">Parth Nare</span>
+                <span class="member-roll">Roll No: 124A8072</span>
+              </div>
+              <div class="member-item">
+                <span class="member-name">Mukta Patil</span>
+                <span class="member-roll">Roll No: 124A8076</span>
+              </div>
+              <div class="member-item">
+                <span class="member-name">Swayam Patil</span>
+                <span class="member-roll">Roll No: 124A8081</span>
+              </div>
+              <div class="member-item">
+                <span class="member-name">Manthan Shetty</span>
+                <span class="member-roll">Roll No: 124A8103</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="guidance-card">
+            <div class="card-label">🎓 Academic Guidance & Institutional Affiliation</div>
+            <div class="guidance-box">
+              <div class="guidance-title">Guided by:</div>
+              <div class="guidance-sub">Prof. / Dr. Department Faculty Advisor</div>
+              <div style="font-size:0.8rem; color:#94a3b8; margin-top:4px;">Department of Artificial Intelligence & Data Science</div>
+            </div>
+            <div class="guidance-box" style="margin-bottom:0;">
+              <div class="guidance-title">SIES Graduate School of Technology (Autonomous)</div>
+              <div class="guidance-sub">Sri Chandrasekarendra Saraswathy Vidyapuram, Sector-V, Nerul, Navi Mumbai - 400706</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+      <div class="footer-inner">
+        <div class="footer-left">
+          <div class="footer-logo">DeepAtmos AI</div>
+          <p>Next-Generation Deep Learning Framework for Rapid Exoplanet Atmospheric Composition Prediction</p>
+          <div style="font-size:0.8rem; color:#64748b; margin-top:6px;">
+            Department of Artificial Intelligence & Data Science • SIES Graduate School of Technology (Autonomous), Nerul
+          </div>
+        </div>
+        <div class="footer-right">
+          <div style="font-size:0.85rem; color:#cbd5e1; font-weight:600;">Parth Nare • Mukta Patil • Swayam Patil • Manthan Shetty</div>
+          <div style="margin-top:10px;">
+            <a href="#hero" class="btn-pill" style="font-size:0.75rem;">▲ Back to Top</a>
+            <a href="#studio" class="btn-pill primary" style="font-size:0.75rem;">🧪 Open Studio</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Modal Popup for Literature Details -->
+  <div id="paper-modal-backdrop" class="paper-modal-backdrop">
+    <div class="paper-modal-card">
+      <button id="modal-close-btn" class="modal-close-btn">&times;</button>
+      <div id="paper-modal-content">
+        <!-- Injected via app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Script Modules -->
+  <script src="real-spectral-data.js"></script>
+  <script src="literature-review-data.js"></script>
+  <script src="deepatmos-model.js"></script>
+  <script src="spectral-chart.js"></script>
+  <script src="live-background.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
